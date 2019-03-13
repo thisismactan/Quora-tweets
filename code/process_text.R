@@ -8,7 +8,7 @@ quora_tokens <- unnest_tokens(tweets, word, answer_text, token = "words") %>%
   group_by(timestamp, text, url, answer_author, stem) %>%
   summarise(n = n()) %>%
   ungroup() %>%
-  filter(!grepl("[[:alnum:]]", stem))
+  filter(!is.na(stem))
 
 ## Cast to DTM
 quora_dtm.tf <- cast_dtm(quora_tokens, document = url, term = stem, value = n)
